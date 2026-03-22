@@ -24,9 +24,8 @@ export default function Hero() {
           <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent z-10 md:w-3/4"></div>
           {/* Bottom gradient snippet just in case */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent z-10 h-full"></div>
-          
           <Image
-            src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1500&auto=format&fit=crop"
+            src="/images/hero/hero.jpg"
             alt="Portrait"
             fill
             priority
@@ -48,8 +47,8 @@ export default function Hero() {
             className="text-5xl md:text-7xl lg:text-[80px] font-black leading-[1.1] mb-12 tracking-tight font-serif"
           >
             <span className="text-[#a89076]">Hallo!</span> <span className="text-white">I am {about?.name?.split(' ')[about?.name?.split(' ').length - 1] || 'Jayead'},</span><br />
-            <span className="text-white">Full Stack Developer based</span><br />
-            <span className="text-white">in {about?.location?.split(',')[0] || 'Bangladesh'}.</span>
+            <span className="text-white">Full Stack Developer</span><br />
+            {/* <span className="text-white">in {about?.location?.split(',')[0] || 'Bangladesh'}.</span> */}
           </motion.h1>
 
           {/* Sub Navigation/Links */}
