@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
 
 const apiClient = axios.create({
   baseURL: API_URL,
@@ -25,28 +25,33 @@ export default apiClient;
 
 // API helper functions
 export async function fetchFeaturedProjects() {
-  const res = await apiClient.get('/projects/featured');
-  return res.data;
+  const res = await apiClient.get('/projects');
+  return res;
 }
 
 export async function fetchAllProjects() {
   const res = await apiClient.get('/projects');
-  return res.data;
+  return res;
 }
 
 export async function fetchProjectBySlug(slug) {
   const res = await apiClient.get(`/projects/${slug}`);
-  return res.data;
+  return res;
+}
+
+export async function fetchPricings() {
+  const res = await apiClient.get('/pricings');
+  return res;
 }
 
 export async function fetchTechnologies() {
   const res = await apiClient.get('/technologies');
-  return res.data;
+  return res;
 }
 
 export async function fetchAbout() {
-  const res = await apiClient.get('/about');
-  return res.data;
+  const res = await apiClient.get('/heroes');
+  return res;
 }
 
 export async function submitContact(data) {

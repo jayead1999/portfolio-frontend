@@ -87,7 +87,7 @@ export default function Projects() {
               
               <div className="relative h-72 overflow-hidden bg-black">
                 <img
-                  src={project.image || (project.images && project.images[0]?.image_path) || "https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=1600&auto=format&fit=crop"}
+                  src={project.image || (project.gallery_images ? JSON.parse(project.gallery_images)[0] : null) || "https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=1600&auto=format&fit=crop"}
                   alt={project.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
                 />
@@ -110,7 +110,7 @@ export default function Projects() {
                   {project.title}
                 </h4>
                 <p className="text-[#999999] mb-6 line-clamp-3 leading-relaxed text-sm">
-                  {project.description}
+                  {project.short_description || project.description}
                 </p>
                 
                 <div className="mt-auto pt-6 border-t border-[#222222] flex flex-wrap gap-2">
