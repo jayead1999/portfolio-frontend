@@ -7,28 +7,16 @@ import { fetchPricings } from "@/lib/api";
 export default function Pricing() {
   const [pricings, setPricings] = useState([]);
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     fetchPricings()
       .then(res => setPricings(res.data || []))
-      .catch(err => console.error("Error fetching pricings:", err));
+      .catch(err => console.error("Error fetching pricings:", err))
+      .finally(() => setLoading(false));
   }, []);
 
-  const displayPricings = pricings.length > 0 ? pricings : [
-    {
-      id: 1,
-      plan_name: "Basic",
-      price: "19.99",
-      features: '["1 Project", "1 Month Support", "Basic UI"]',
-      is_popular: 0
-    },
-    {
-      id: 2,
-      plan_name: "Pro",
-      price: "49.99",
-      features: '["5 Projects", "6 Months Support", "Premium UI", "Source Code"]',
-      is_popular: 1
-    }
-  ];
+  // Removed mock fallback to display actual API data
 
   return (
     <section id="pricing" className="py-24 relative z-10 bg-[#0a0a0a]">
@@ -47,7 +35,9 @@ export default function Pricing() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {displayPricings.map((pricing, index) => {
+          {loading && <div className="text-white col-span-3 text-center py-10">Loading pricing plans...</div>}
+          {!loading && pricings.length === 0 && <div className="text-white col-span-3 text-center py-10">No pricing plans found.</div>}
+          {pricings.map((pricing, index) => {
             const features = typeof pricing.features === 'string' ? JSON.parse(pricing.features) : pricing.features || [];
             return (
               <motion.div

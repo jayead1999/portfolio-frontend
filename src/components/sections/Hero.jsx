@@ -4,15 +4,24 @@ import { motion } from "framer-motion";
 import { FiTwitter, FiFacebook, FiGithub, FiLinkedin } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { fetchAbout } from "@/lib/api";
+import { fetchAbout, fetchHero } from "@/lib/api";
+
+
+const IMAGE_BASE = process.env.NEXT_PUBLIC_IMAGE_API_URL;
+// const IMAGE_BASE = process.env.NEXT_PUBLIC_IMAGE_API_URL ?? "";
 
 export default function Hero() {
   const [about, setAbout] = useState(null);
+  const [hero, setHero] = useState(null);
 
   useEffect(() => {
     fetchAbout()
       .then(res => setAbout(res.data))
       .catch(err => console.error("Error fetching about info:", err));
+
+    fetchHero()
+      .then(res => setHero(res.data))
+      .catch(err => console.error("Error fetching hero info:", err));
   }, []);
 
   return (
@@ -24,31 +33,33 @@ export default function Hero() {
           <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent z-10 md:w-3/4"></div>
           {/* Bottom gradient snippet just in case */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent z-10 h-full"></div>
-            <img
-              src={about?.hero_image || "/images/hero/hero.jpg"}
-              alt="Portrait"
-              className="object-cover object-center grayscale opacity-60 md:opacity-100 w-full h-full"
-            />
-          </div>
+          <Image
+            src={hero?.hero_image && `${IMAGE_BASE}/storage/${hero.hero_image}`}
+            // src={"/images/hero/hero.jpg"}
+            alt="Portrait"
+            fill
+            className="object-cover object-center opacity-60 md:opacity-100"
+          />
+        </div>
       </div>
 
       {/* Main Content (Left Side) */}
       <div className="container mx-auto px-6 md:px-12 relative z-20 w-full">
         <div className="max-w-3xl pt-24 pb-12">
-          
+
           {/* Hero Headline */}
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="text-5xl md:text-7xl lg:text-[80px] font-black leading-[1.1] mb-12 tracking-tight font-serif"
           >
-            <span className="text-[#a89076]">Hallo!</span> <span className="text-white">I am {about?.title || 'Building Digital Products'}</span><br />
-            <span className="text-white">{about?.subtitle || 'Full Stack Developer'}</span><br />
+            <span className="text-[#a89076]">Hallo!</span> <span className="text-white">I am {hero?.title || about?.f_name || 'Building Digital Products'}</span><br />
+            <span className="text-white">{hero?.subtitle || 'Full Stack Developer'}</span><br />
           </motion.h1>
 
           {/* Sub Navigation/Links */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
@@ -58,15 +69,15 @@ export default function Hero() {
               See bits and pieces of my code work and projects on
             </p>
             <div className="flex flex-wrap items-center gap-2 text-lg md:text-xl font-bold">
-              <a href={about?.github_url || "https://github.com"} target="_blank" rel="noreferrer" className="text-[#f92672] hover:opacity-80 transition-opacity">
+              <a href={about?.github || "https://github.com"} target="_blank" rel="noreferrer" className="text-[#f92672] hover:opacity-80 transition-opacity">
                 GitHub
               </a>
               <span className="text-white">-</span>
-              <a href={about?.linkedin_url || "https://linkedin.com"} target="_blank" rel="noreferrer" className="text-[#0055FF] hover:opacity-80 transition-opacity">
+              <a href={about?.linkedin || "https://linkedin.com"} target="_blank" rel="noreferrer" className="text-[#0055FF] hover:opacity-80 transition-opacity">
                 LinkedIn
               </a>
               <span className="text-white">-</span>
-              <a href="https://twitter.com" target="_blank" rel="noreferrer" className="text-[#00a1f1] hover:opacity-80 transition-opacity">
+              <a href={about?.twitter || "https://twitter.com"} target="_blank" rel="noreferrer" className="text-[#00a1f1] hover:opacity-80 transition-opacity">
                 Twitter
               </a>
             </div>
@@ -88,21 +99,21 @@ export default function Hero() {
       </div>
 
       {/* Floating Vertical Socials Map (Bottom Left) */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 1 }}
         className="absolute bottom-12 left-6 md:left-12 z-30 flex flex-col gap-6 text-white"
       >
-        <a href="https://twitter.com" target="_blank" rel="noreferrer" className="hover:text-[#00a1f1] transition-colors">
+        <a href={about?.twitter || "https://twitter.com"} target="_blank" rel="noreferrer" className="hover:text-[#00a1f1] transition-colors">
           <FiTwitter size={20} />
           <span className="sr-only">Twitter</span>
         </a>
-        <a href="https://facebook.com" target="_blank" rel="noreferrer" className="hover:text-[#1877F2] transition-colors">
+        <a href={about?.facebook || "https://facebook.com"} target="_blank" rel="noreferrer" className="hover:text-[#1877F2] transition-colors">
           <FiFacebook size={20} />
           <span className="sr-only">Facebook</span>
         </a>
-        <a href={about?.github_url || "https://github.com"} target="_blank" rel="noreferrer" className="hover:text-[#f92672] transition-colors">
+        <a href={about?.github || "https://github.com"} target="_blank" rel="noreferrer" className="hover:text-[#f92672] transition-colors">
           <FiGithub size={20} />
           <span className="sr-only">GitHub</span>
         </a>

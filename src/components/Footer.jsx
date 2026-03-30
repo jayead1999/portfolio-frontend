@@ -1,7 +1,19 @@
+"use client";
+
 import Link from "next/link";
 import { FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
+import { useEffect, useState } from "react";
+import { fetchAbout } from "@/lib/api";
 
 export default function Footer() {
+  const [about, setAbout] = useState(null);
+
+  useEffect(() => {
+    fetchAbout()
+      .then(res => setAbout(res.data))
+      .catch(err => console.error("Error fetching about info:", err));
+  }, []);
+
   return (
     <footer className="bg-[#0a0a0a] py-12 border-t border-[#222222] relative z-10">
       <div className="container mx-auto px-6 md:px-12 flex flex-col items-center justify-between text-center md:flex-row md:text-left gap-8">
@@ -22,13 +34,13 @@ export default function Footer() {
             <Link href="/projects" className="text-slate-400 hover:text-white text-sm transition-colors">Projects</Link>
           </div>
           <div className="flex gap-4">
-            <a href="https://github.com" target="_blank" rel="noreferrer" className="p-2 bg-white/5 text-slate-400 rounded-lg hover:text-white hover:bg-white/10 border border-white/5 transition-colors">
+            <a href={about?.github || "https://github.com"} target="_blank" rel="noreferrer" className="p-2 bg-white/5 text-slate-400 rounded-lg hover:text-white hover:bg-white/10 border border-white/5 transition-colors">
               <FiGithub size={18} />
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="p-2 bg-white/5 text-slate-400 rounded-lg hover:text-white hover:bg-white/10 border border-white/5 transition-colors">
+            <a href={about?.linkedin || "https://linkedin.com"} target="_blank" rel="noreferrer" className="p-2 bg-white/5 text-slate-400 rounded-lg hover:text-white hover:bg-white/10 border border-white/5 transition-colors">
               <FiLinkedin size={18} />
             </a>
-            <a href="mailto:hello@jayead.dev" className="p-2 bg-white/5 text-slate-400 rounded-lg hover:text-white hover:bg-white/10 border border-white/5 transition-colors">
+            <a href={`mailto:${about?.email || "hello@jayead.dev"}`} className="p-2 bg-white/5 text-slate-400 rounded-lg hover:text-white hover:bg-white/10 border border-white/5 transition-colors">
               <FiMail size={18} />
             </a>
           </div>

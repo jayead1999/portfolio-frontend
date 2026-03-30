@@ -1,13 +1,20 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
-import { submitContact } from "@/lib/api";
+import { useState, useEffect } from "react";
+import { submitContact, fetchAbout } from "@/lib/api";
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(null);
+  const [about, setAbout] = useState(null);
+
+  useEffect(() => {
+    fetchAbout()
+      .then(res => setAbout(res.data))
+      .catch(err => console.error("Error fetching about info:", err));
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,16 +55,25 @@ export default function Contact() {
 
             <div className="bg-[#111111] border border-[#222222] p-8 mb-8">
               <h4 className="text-lg font-bold text-white mb-1">Email</h4>
-              <p className="text-[#999999] mb-5">hello@jayead.dev</p>
+              <p className="text-[#999999] mb-5">{about?.email || "hello@jayead.dev"}</p>
 
               <h4 className="text-lg font-bold text-white mb-1">Location</h4>
-              <p className="text-[#999999] mb-5">Dhaka, Bangladesh</p>
+              <p className="text-[#999999] mb-5">{about?.city || "Dhaka, Bangladesh"}</p>
 
               <h4 className="text-lg font-bold text-white mb-2">Social</h4>
-              <div className="flex gap-4 mt-2">
-                <a href="#" className="text-[#a89076] hover:text-white transition-colors text-sm font-bold uppercase tracking-wider">LinkedIn</a>
-                <a href="#" className="text-[#a89076] hover:text-white transition-colors text-sm font-bold uppercase tracking-wider">GitHub</a>
-                <a href="#" className="text-[#a89076] hover:text-white transition-colors text-sm font-bold uppercase tracking-wider">X (Twitter)</a>
+              <div className="flex flex-wrap gap-4 mt-2">
+                {about?.linkedin && (
+                  <a href={about.linkedin} target="_blank" rel="noreferrer" className="text-[#a89076] hover:text-white transition-colors text-sm font-bold uppercase tracking-wider">LinkedIn</a>
+                )}
+                {about?.github && (
+                  <a href={about.github} target="_blank" rel="noreferrer" className="text-[#a89076] hover:text-white transition-colors text-sm font-bold uppercase tracking-wider">GitHub</a>
+                )}
+                {about?.twitter && (
+                  <a href={about.twitter} target="_blank" rel="noreferrer" className="text-[#a89076] hover:text-white transition-colors text-sm font-bold uppercase tracking-wider">Twitter</a>
+                )}
+                {about?.facebook && (
+                  <a href={about.facebook} target="_blank" rel="noreferrer" className="text-[#a89076] hover:text-white transition-colors text-sm font-bold uppercase tracking-wider">Facebook</a>
+                )}
               </div>
             </div>
           </motion.div>

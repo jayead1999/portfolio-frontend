@@ -2,17 +2,19 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 import { FiGithub, FiExternalLink } from "react-icons/fi";
-import { fetchFeaturedProjects } from "@/lib/api";
+import { fetchAllProjects } from "@/lib/api";
+
+const IMAGE_BASE = process.env.NEXT_PUBLIC_IMAGE_API_URL;
 
 export default function Projects() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchFeaturedProjects()
+    fetchAllProjects()
       .then(res => {
         setProjects(res.data || []);
       })
@@ -20,30 +22,8 @@ export default function Projects() {
       .finally(() => setLoading(false));
   }, []);
 
-  // Fallbacks if backend doesn't have projects yet
-  const displayProjects = projects.length > 0 ? projects : [
-    {
-      id: 1,
-      title: "E-Commerce Microservices",
-      description: "A large-scale e-commerce platform built on microservices architecture featuring independent deployability, highly scalable nodes, and seamless cart systems.",
-      image: "https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=1600&auto=format&fit=crop",
-      tags: ["Next.js", "Laravel", "Docker", "Stripe"],
-    },
-    {
-      id: 2,
-      title: "Real-time Chat Application",
-      description: "Secure, real-time messaging application with end-to-end encryption, typing indicators, read receipts, and multimedia sharing capabilities.",
-      image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1600&auto=format&fit=crop",
-      tags: ["React", "Express", "Socket.io", "MongoDB"],
-    },
-    {
-      id: 3,
-      title: "AI Image Generator Dashboard",
-      description: "A sleek interface connected to advanced Machine Learning models empowering users to generate high-quality images from text prompts within seconds.",
-      image: "https://images.unsplash.com/photo-1620121692029-d088224ddc74?q=80&w=1600&auto=format&fit=crop",
-      tags: ["Vue", "Tailwind", "Python", "FastAPI"],
-    }
-  ];
+  console.log('projects',projects);
+  // Fallbacks removed per user request to show real API data
 
   return (
     <section id="projects" className="py-24 relative z-10 bg-[#0a0a0a]">
@@ -72,7 +52,9 @@ export default function Projects() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {displayProjects.map((project, index) => (
+          {loading && <div className="text-white col-span-3 text-center py-10">Loading projects...</div>}
+          {!loading && projects.length === 0 && <div className="text-white col-span-3 text-center py-10">No projects found.</div>}
+          {projects.map((project, index) => (
             <motion.div
               key={project.id || index}
               initial={{ opacity: 0, y: 30 }}
@@ -81,15 +63,16 @@ export default function Projects() {
               transition={{ delay: index * 0.1 }}
               className="group overflow-hidden bg-[#111111] border border-[#222222] hover:border-[#a89076] transition-all flex flex-col h-full relative"
             >
-              <Link href={`/projects/${project.slug || 'sample'}`} className="absolute inset-0 z-10">
+              <Link href={`/projects/${project.slug}`} className="absolute inset-0 z-10">
                 <span className="sr-only">View {project.title}</span>
               </Link>
               
               <div className="relative h-72 overflow-hidden bg-black">
-                <img
-                  src={project.image || (project.gallery_images ? JSON.parse(project.gallery_images)[0] : null) || "https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=1600&auto=format&fit=crop"}
+                <Image
+                  src={project?.image && `${IMAGE_BASE}/storage/${project.image}`}
                   alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
                 />
                 <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0 z-20">
                    {project.github_url && (
@@ -114,7 +97,7 @@ export default function Projects() {
                 </p>
                 
                 <div className="mt-auto pt-6 border-t border-[#222222] flex flex-wrap gap-2">
-                  {(project.tags || project.technologies?.map(t => t.name) || ["Next.js", "Tailwind"]).map((tech, i) => (
+                  {(project.tags || project.tag || project.technologies?.map(t => t.name) || ["React", "Laravel"]).map((tech, i) => (
                     <span key={i} className="px-3 py-1 bg-black text-[#a89076] border border-[#333] tracking-wider text-[10px] font-bold uppercase relative z-20">
                       {tech}
                     </span>

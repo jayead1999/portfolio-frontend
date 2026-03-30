@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { fetchTechnologies } from "@/lib/api";
+// import { fetchTechnologies } from "@/lib/api";
 import {
   SiNextdotjs,
   SiReact,
@@ -17,11 +17,11 @@ import {
 export default function TechStack() {
   const [techs, setTechs] = useState([]);
 
-  useEffect(() => {
-    fetchTechnologies()
-      .then(res => setTechs(res.data || []))
-      .catch(err => console.error("Error fetching technologies:", err));
-  }, []);
+  // useEffect(() => {
+  //   fetchTechnologies()
+  //     .then(res => setTechs(res.data || []))
+  //     .catch(err => console.error("Error fetching technologies:", err));
+  // }, []);
 
   // Fallback tech stack if backend doesn't exist
   const skills = [

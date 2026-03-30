@@ -1,76 +1,62 @@
+"use client";
+
 import Link from "next/link";
-import { FiArrowRight, FiGithub, FiExternalLink } from "react-icons/fi";
+import { FiArrowRight, FiExternalLink } from "react-icons/fi";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { useState, useEffect } from "react";
+import { fetchAllProjects } from "@/lib/api";
+import Image from "next/image";
 
-// Native fetch for Next.js Server Component to fetch all projects
-async function getAllProjects() {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
-  // Use no-store or revalidate depending on application needs, here caching for 60s
-  const res = await fetch(`${API_URL}/projects`, {
-    next: { revalidate: 60 }
-  });
-  
-  if (!res.ok) {
-    throw new Error('Failed to fetch projects');
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '');
+function resolveImageUrl(path) {
+  if (!path) return null;
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+
+  // Clean leading slash and handle storage/ prefix if it exists
+  let cleanPath = path.startsWith('/') ? path.substring(1) : path;
+  if (cleanPath.startsWith('storage/')) {
+    cleanPath = cleanPath.substring(8);
   }
   
-  return res.json();
+  const baseUrl = BACKEND_URL.endsWith('/') ? BACKEND_URL.slice(0, -1) : BACKEND_URL;
+  return `${baseUrl}/storage/${cleanPath}`;
 }
 
-export const metadata = {
-  title: "All Projects | Jayead.",
-  description: "Browse all the web applications, APIs, and digital products I have built over my career.",
-};
+function getProjectImage(project) {
+  const raw = project.image || (project.gallery_images && project.gallery_images[0]);
+  return resolveImageUrl(raw);
+}
 
-export default async function ProjectsDirectory() {
-  let projects = [];
+export default function ProjectsDirectory() {
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  try {
-    const data = await getAllProjects();
-    if (data && data.data) {
-      projects = data.data;
-    }
-  } catch (err) {
-    // Fallbacks if backend doesn't have projects yet
-    projects = [
-      {
-        id: 1,
-        slug: "e-commerce-microservices",
-        title: "E-Commerce Microservices",
-        description: "A large-scale e-commerce platform built on microservices architecture featuring independent deployability, highly scalable nodes, and seamless cart systems.",
-        image: "https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=1600&auto=format&fit=crop",
-        tags: ["Next.js", "Laravel", "Docker", "Stripe"],
-        project_type: "web_app"
-      },
-      {
-        id: 2,
-        slug: "real-time-chat",
-        title: "Real-time Chat Application",
-        description: "Secure, real-time messaging application with end-to-end encryption, typing indicators, read receipts, and multimedia sharing capabilities.",
-        image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1600&auto=format&fit=crop",
-        tags: ["React", "Express", "Socket.io", "MongoDB"],
-        project_type: "full_stack"
-      },
-      {
-        id: 3,
-        slug: "ai-image-generator",
-        title: "AI Image Generator Dashboard",
-        description: "A sleek interface connected to advanced Machine Learning models empowering users to generate high-quality images from text prompts within seconds.",
-        image: "https://images.unsplash.com/photo-1620121692029-d088224ddc74?q=80&w=1600&auto=format&fit=crop",
-        tags: ["Vue", "Tailwind", "Python", "FastAPI"],
-        project_type: "open_source"
-      },
-      {
-        id: 4,
-        slug: "fintech-dashboard",
-        title: "Fintech Analytics Dashboard",
-        description: "Comprehensive financial analytics dashboard with real-time charting, transactional data aggregation, and sophisticated filtering.",
-        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&auto=format&fit=crop",
-        tags: ["React", "D3.js", "Node", "PostgreSQL"],
-        project_type: "client_work"
+  useEffect(() => {
+    const getProjects = async () => {
+      try {
+        const response = await fetchAllProjects();
+        if (response.data && Array.isArray(response.data)) {
+          setProjects(response.data);
+        } else if (response.data && response.data.data) {
+          setProjects(response.data.data);
+        }
+      } catch (err) {
+        console.error("Error fetching projects:", err);
+      } finally {
+        setLoading(false);
       }
-    ];
+    };
+
+    getProjects();
+  }, []);
+
+  if (loading) {
+    return (
+      <main className="min-h-screen bg-[#0a0a0a] text-white selection:bg-[#a89076]/30 font-sans flex items-center justify-center">
+        <div className="text-[#a89076] animate-pulse">Loading projects...</div>
+      </main>
+    );
   }
 
   return (
@@ -103,7 +89,7 @@ export default async function ProjectsDirectory() {
           {/* Grid setup mimicking Projects section but spanning differently */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-10">
             {projects.map((project, index) => {
-               const projectImage = project.image || (project.images && project.images[0]?.image_path) || "https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=1600&auto=format&fit=crop";
+               const projectImage = getProjectImage(project);
                const slug = project.slug || 'sample';
 
                return (
@@ -111,21 +97,23 @@ export default async function ProjectsDirectory() {
                   key={project.id || index}
                   className="group overflow-hidden bg-[#111111] border border-[#222222] hover:border-[#a89076] transition-all flex flex-col h-full relative group shadow-lg"
                 >
-                  <Link href={`/projects/${slug}`} className="absolute inset-0 z-10 focus:outline-none focus:ring-2 focus:ring-[#a89076]">
+                  {/* <Link href={`/projects/${slug}`} className="absolute inset-0 z-10 focus:outline-none focus:ring-2 focus:ring-[#a89076]">
                     <span className="sr-only">View Details for {project.title}</span>
-                  </Link>
+                  </Link> */}
 
                   <div className="relative h-64 overflow-hidden bg-black border-b border-[#222222]">
-                    <img
+                    <Image
                       src={projectImage}
                       alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
                     />
                     
                     <div className="absolute top-4 left-4 z-20 pointer-events-none">
-                       {project.project_type && (
+                       {(project.tag || project.tags || project.project_type) && (
                          <span className="backdrop-blur-md bg-black/60 border border-[#333] px-3 py-1.5 text-xs font-bold text-[#a89076] tracking-wide uppercase">
-                           {project.project_type.replace('_', ' ')}
+                           {project.tag?.[0] || project.tags?.[0] || project.project_type?.replace('_', ' ')}
                          </span>
                        )}
                     </div>
@@ -136,31 +124,20 @@ export default async function ProjectsDirectory() {
                       {project.title}
                     </h3>
                     <p className="text-[#999999] mb-8 line-clamp-3 text-sm leading-relaxed">
-                      {project.description}
+                      {project.short_description || project.description}
                     </p>
 
-                    <div className="mt-auto pt-6 border-t border-[#222222] flex items-center justify-between">
-                       <span className="text-[#a89076] font-medium text-sm flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                    <div className="mt-auto pt-6 border-t border-[#222222] flex items-center justify-between relative z-20">
+                       <Link href={`/projects/${slug}`} className="text-[#a89076] font-medium text-sm flex items-center gap-1 hover:text-white transition-colors group/link">
                          View Details
-                         <FiArrowRight />
-                       </span>
+                         <FiArrowRight className="group-hover/link:translate-x-1 transition-transform" />
+                       </Link>
                        
-                       {/* Floating links behind absolute link using absolute z-20 logic mapped previously */}
-                       {(project.github_url || project.live_url) && (
-                         <div className="flex gap-2 relative z-20">
-                           {project.github_url && (
-                             <a href={project.github_url} target="_blank" rel="noreferrer" className="p-2 text-[#777] hover:text-white hover:bg-[#222] transition-colors focus:ring-2 focus:ring-[#a89076]">
-                               <FiGithub size={18} />
-                               <span className="sr-only">Github source code</span>
-                             </a>
-                           )}
-                           {project.live_url && (
-                             <a href={project.live_url} target="_blank" rel="noreferrer" className="p-2 text-[#777] hover:text-white hover:bg-[#222] transition-colors focus:ring-2 focus:ring-[#a89076]">
-                               <FiExternalLink size={18} />
-                               <span className="sr-only">Live Demo</span>
-                             </a>
-                           )}
-                         </div>
+                       {project.link && (
+                           <a href={project.link} target="_blank" rel="noreferrer" className="px-4 py-2 bg-[#111111] hover:bg-[#222222] border border-[#333333] hover:border-[#a89076] text-white hover:text-[#a89076] text-xs font-bold uppercase transition-colors flex items-center gap-2 focus:ring-2 focus:ring-[#a89076]">
+                             <FiExternalLink size={14} />
+                             Live Demo
+                           </a>
                        )}
                     </div>
                   </div>
