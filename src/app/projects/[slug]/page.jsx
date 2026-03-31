@@ -24,10 +24,9 @@ import { fetchProjectBySlug } from "@/lib/api";
 import Image from "next/image";
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:8000';
-const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=1600&auto=format&fit=crop";
 
 function resolveImageUrl(path) {
-  if (!path) return FALLBACK_IMAGE;
+  if (!path) return "";
   if (path.startsWith('http://') || path.startsWith('https://')) return path;
   
   // Clean leading slash and handle storage/ prefix if it exists
@@ -164,7 +163,7 @@ export default function ProjectDetails({ params }) {
               {(project.link || project.live_url) && (
                 <a href={project.link || project.live_url} target="_blank" rel="noreferrer" 
                   className="flex items-center gap-2 px-8 py-4 bg-primary text-black text-xs font-black uppercase tracking-widest hover:bg-white transition-all transform hover:-translate-y-1 rounded-sm">
-                  <FiExternalLink size={18} /> Launch Project
+                  <FiExternalLink size={18} /> Live Link
                 </a>
               )}
               {project.github_url && (
@@ -225,18 +224,53 @@ export default function ProjectDetails({ params }) {
                 </div>
               )}
 
-              {/* Technology Use Section - Moved from Sidebar */}
+              {/* Technology Use Section - Re-designed with name and image */}
               <div className="mt-16 pt-12 border-t border-white/5">
                 <h2 className="text-sm font-bold tracking-[0.2em] uppercase text-primary mb-10 flex items-center gap-3">
-                  <span className="w-8 h-px bg-primary"></span> Technology Use
+                  <span className="w-8 h-px bg-primary"></span> Tech Architecture
                 </h2>
-                <div className="flex flex-wrap gap-3">
-                  {(project.technology || project.tags || []).map((tech, i) => (
-                    <div key={i} className="px-5 py-3 bg-white/5 border border-white/5 rounded-xl flex items-center gap-3 group hover:border-primary/30 transition-all">
-                      <div className="w-2 h-2 rounded-full bg-primary group-hover:animate-ping"></div>
-                      <span className="text-white font-bold text-sm uppercase tracking-widest">{tech}</span>
-                    </div>
-                  ))}
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+                  {project.technologies && project.technologies.length > 0 ? (
+                    project.technologies.map((tech, i) => (
+                      <div key={i} className="group relative">
+                        {/* Interactive Backdrop Glow */}
+                        <div className="absolute -inset-2 bg-linear-to-r from-primary/20 to-transparent rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <div className="relative flex flex-col items-center p-6 bg-card border border-white/5 rounded-2xl group-hover:border-primary/40 group-hover:bg-white/3 transition-all duration-300">
+                          {/* Tech Icon Container */}
+                          <div className="w-16 h-16 relative mb-4 p-3 bg-white/3 rounded-2xl border border-white/5 group-hover:border-primary/20 group-hover:bg-white/5 transition-all transform group-hover:scale-110 group-hover:-rotate-3">
+                             {tech.image ? (
+                               <Image 
+                                 src={resolveImageUrl(tech.image)} 
+                                 alt={tech.name} 
+                                 fill 
+                                 className="object-contain p-3"
+                               />
+                             ) : (
+                               <div className="w-full h-full flex items-center justify-center opacity-20">
+                                 <FiLayers size={24} />
+                               </div>
+                             )}
+                          </div>
+                          
+                          <div className="text-center">
+                            <h4 className="text-xs font-black text-white uppercase tracking-[0.15em] mb-1 group-hover:text-primary transition-colors">{tech.name}</h4>
+                            <div className="h-1 w-0 bg-primary mx-auto group-hover:w-8 transition-all duration-300 rounded-full"></div>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    /* Fallback for legacy technology data or tags */
+                    (project.technology || project.tags || []).map((tech, i) => (
+                      <div key={i} className="group relative">
+                         <div className="px-5 py-4 bg-white/5 border border-white/5 rounded-xl flex items-center gap-3 hover:border-primary/30 transition-all">
+                            <div className="w-2.5 h-2.5 rounded-full bg-primary group-hover:animate-ping shadow-[0_0_10px_rgba(139,92,246,0.5)]"></div>
+                            <span className="text-white font-bold text-xs uppercase tracking-widest">{tech}</span>
+                         </div>
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
             </div>
@@ -249,7 +283,7 @@ export default function ProjectDetails({ params }) {
                   <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-bl-full pointer-events-none"></div>
                   
                   <h3 className="text-xl font-bold mb-10 pb-6 border-b border-white/5 flex items-center gap-3">
-                    <FiLayers className="text-primary" /> Key Details
+                    <FiLayers className="text-primary" /> Client Details
                   </h3>
 
                   <div className="space-y-8">
@@ -356,14 +390,17 @@ export default function ProjectDetails({ params }) {
               ref={sliderRef}
               className="flex gap-6 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden snap-x snap-mandatory pb-12 cursor-grab active:cursor-grabbing"
             >
-              {project.gallery_images.map((img, i) => (
+              {project.gallery_images.map((galleryImg, i) => (
                 <div 
                   key={i} 
-                  onClick={() => setSelectedGalleryImage(img)}
-                  className="shrink-0 w-[85vw] md:w-[45vw] lg:w-[calc(33.333%-1rem)] aspect-16/10 bg-white/5 border border-white/5 rounded-2xl overflow-hidden snap-center group cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedGalleryImage(galleryImg);
+                  }}
+                  className="shrink-0 w-[85vw] md:w-[45vw] lg:w-[calc(33.333%-1rem)] aspect-16/10 bg-white/5 border border-white/5 rounded-2xl overflow-hidden snap-center group cursor-pointer relative"
                 >
                   <Image 
-                    src={resolveImageUrl(img)} 
+                    src={resolveImageUrl(galleryImg)} 
                     alt={`Gallery perspective ${i+1}`}
                     width={800}
                     height={600}
