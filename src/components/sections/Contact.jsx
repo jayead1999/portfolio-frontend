@@ -94,7 +94,7 @@ export default function Contact() {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full bg-[#0a0a0a] border border-[#333333] px-4 py-3 text-white focus:outline-none focus:border-[#a89076] transition-colors"
+                    className="w-full bg-background border border-border px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors"
                   />
                 </div>
                 <div>

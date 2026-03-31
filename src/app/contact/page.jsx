@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ContactSection from "@/components/sections/Contact";
+import FloatingContact from "@/components/flooting-contct";
 
 export const metadata = {
   title: "Contact | Jayead.",
@@ -10,6 +11,7 @@ export default function ContactPage() {
   return (
     <main className="min-h-screen bg-background text-white selection:bg-primary/30 flex flex-col">
       <Navbar />
+      <FloatingContact />
       
       {/* Spacer for fixed navbar */}
       <div className="pt-20 flex-grow">
@@ -23,9 +25,10 @@ export default function ContactPage() {
         </div>
         
         {/* Reuse the contact section UI */}
-        <div className="pb-16 -mb-16">
+        <div className="pt-16">
           <ContactSection />
         </div>
+
       </div>
 
       <Footer />

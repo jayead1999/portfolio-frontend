@@ -7,11 +7,14 @@ import Pricing from "@/components/sections/Pricing";
 import Testimonials from "@/components/sections/Testimonials";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/Footer";
+import FloatingContact from "@/components/flooting-contct";
+
 
 export default function Home() {
   return (
     <main className="min-h-screen">
       <Navbar />
+      <FloatingContact />
       <Hero />
       <About />
       <TechStack />

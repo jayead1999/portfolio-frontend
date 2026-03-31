@@ -23,7 +23,7 @@ export default function SkillsPage() {
         </div>
         
         {/* Reuse the skills section UI */}
-        <div className="pb-16">
+        <div className="pt-16">
           <TechStack />
         </div>
       </div>
