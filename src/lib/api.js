@@ -70,3 +70,8 @@ export async function submitContact(data) {
   const res = await apiClient.post('/contact', data);
   return res.data;
 } 
+
+export async function fetchTestimonials() {
+  const res = await apiClient.get('/testimonials');
+  return res;
+}

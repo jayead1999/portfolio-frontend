@@ -22,13 +22,13 @@ export default function Projects() {
       .finally(() => setLoading(false));
   }, []);
 
-  console.log('projects',projects);
+  // console.log('projects', projects);
   // Fallbacks removed per user request to show real API data
 
   return (
     <section id="projects" className="py-24 relative z-10 bg-background">
       <div className="container mx-auto px-6 md:px-12 border-t border-border pt-24">
-        
+
         <div className="flex flex-col md:flex-row justify-between items-end mb-16">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -66,7 +66,7 @@ export default function Projects() {
               <Link href={`/projects/${project.slug}`} className="absolute inset-0 z-10">
                 <span className="sr-only">View {project.title}</span>
               </Link>
-              
+
               <div className="relative h-72 overflow-hidden bg-black">
                 <Image
                   src={project?.image && `${IMAGE_BASE}/storage/${project.image}`}
@@ -75,19 +75,19 @@ export default function Projects() {
                   className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
                 />
                 <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0 z-20">
-                   {project.github_url && (
-                     <a href={project.github_url} target="_blank" rel="noreferrer" className="w-10 h-10 bg-black/80 backdrop-blur-md flex items-center justify-center text-[#999999] hover:text-white hover:bg-primary transition-colors border border-border">
-                       <FiGithub size={20} />
-                     </a>
-                   )}
-                   {project.live_url && (
-                     <a href={project.live_url} target="_blank" rel="noreferrer" className="w-10 h-10 bg-black/80 backdrop-blur-md flex items-center justify-center text-[#999999] hover:text-white hover:bg-primary transition-colors border border-border">
-                       <FiExternalLink size={20} />
-                     </a>
-                   )}
+                  {project.github_url && (
+                    <a href={project.github_url} target="_blank" rel="noreferrer" className="w-10 h-10 bg-black/80 backdrop-blur-md flex items-center justify-center text-[#999999] hover:text-white hover:bg-primary transition-colors border border-border">
+                      <FiGithub size={20} />
+                    </a>
+                  )}
+                  {project.live_url && (
+                    <a href={project.live_url} target="_blank" rel="noreferrer" className="w-10 h-10 bg-black/80 backdrop-blur-md flex items-center justify-center text-[#999999] hover:text-white hover:bg-primary transition-colors border border-border">
+                      <FiExternalLink size={20} />
+                    </a>
+                  )}
                 </div>
               </div>
-              
+
               <div className="p-8 flex flex-col flex-grow z-0">
                 <h4 className="text-2xl font-black text-white mb-4 group-hover:text-primary font-serif transition-colors">
                   {project.title}
@@ -95,7 +95,7 @@ export default function Projects() {
                 <p className="text-[#999999] mb-6 line-clamp-3 leading-relaxed text-sm">
                   {project.short_description || project.description}
                 </p>
-                
+
                 <div className="mt-auto pt-6 border-t border-[#222222] flex flex-wrap gap-2">
                   {(project.tags || project.tag || project.technologies?.map(t => t.name) || ["React", "Laravel"]).map((tech, i) => (
                     <span key={i} className="px-3 py-1 bg-black text-primary border border-border tracking-wider text-[10px] font-bold uppercase relative z-20">

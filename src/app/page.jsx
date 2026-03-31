@@ -4,6 +4,7 @@ import About from "@/components/sections/About";
 import TechStack from "@/components/sections/TechStack";
 import Projects from "@/components/sections/Projects";
 import Pricing from "@/components/sections/Pricing";
+import Testimonials from "@/components/sections/Testimonials";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/Footer";
 
@@ -16,6 +17,7 @@ export default function Home() {
       <TechStack />
       <Projects />
       <Pricing />
+      <Testimonials />
       <Contact />
       <Footer />
     </main>
