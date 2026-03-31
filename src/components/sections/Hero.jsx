@@ -13,7 +13,10 @@ const IMAGE_BASE = process.env.NEXT_PUBLIC_IMAGE_API_URL;
 export default function Hero() {
   const [about, setAbout] = useState(null);
   const [hero, setHero] = useState(null);
-  const [titles, setTitles] = useState(null);
+  const [titles, setTitles] = useState([]);
+  const [titlesIndex, setTitlesIndex] = useState(0);
+  const [displayedText, setDisplayedText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
 
 
   useEffect(() => {
@@ -34,15 +37,50 @@ export default function Hero() {
 
   }, []);
 
+  useEffect(() => {
+    if (!titles || titles.length === 0) return;
+
+    const handleTyping = () => {
+      const currentTitle = titles[titlesIndex]?.title || "";
+      
+      if (!isDeleting) {
+        if (displayedText.length < currentTitle.length) {
+          setDisplayedText(currentTitle.slice(0, displayedText.length + 1));
+        } else {
+          setIsDeleting(true);
+        }
+      } else {
+        if (displayedText.length > 0) {
+          setDisplayedText(currentTitle.slice(0, displayedText.length - 1));
+        } else {
+          setIsDeleting(false);
+          setTitlesIndex((prev) => (prev + 1) % titles.length);
+        }
+      }
+    };
+
+    let timeoutSpeed = isDeleting ? 100 : 150;
+    
+    const currentTitle = titles[titlesIndex]?.title || "";
+    if (!isDeleting && displayedText.length === currentTitle.length) {
+      timeoutSpeed = 2000; // Wait at the end of typing
+    } else if (isDeleting && displayedText.length === 0) {
+      timeoutSpeed = 500; // Wait before starting next title
+    }
+
+    const timer = setTimeout(handleTyping, timeoutSpeed);
+    return () => clearTimeout(timer);
+  }, [displayedText, isDeleting, titles, titlesIndex]);
+
   return (
-    <section id="home" className="relative min-h-screen bg-[#0a0a0a] overflow-hidden flex items-center">
+    <section id="home" className="relative min-h-screen bg-[var(--background)] overflow-hidden flex items-center">
       {/* Background Image Container (Right Side) */}
       <div className="absolute inset-0 z-0 flex justify-end">
         <div className="w-full md:w-[60%] h-full relative">
-          {/* Gradient overlay to seamlessly blend the left black background with the image */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent z-10 md:w-3/4"></div>
+          {/* Gradient overlay to seamlessly blend the left background with the image */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[var(--background)] via-[var(--background)]/80 to-transparent z-10 md:w-3/4"></div>
           {/* Bottom gradient snippet just in case */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent z-10 h-full"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)] via-transparent to-transparent z-10 h-full"></div>
           <Image
             src={hero?.hero_image ? `${IMAGE_BASE}/storage/${hero.hero_image}` : "/images/hero/hero.jpg"}
             alt="Portrait"
@@ -63,15 +101,19 @@ export default function Hero() {
             transition={{ duration: 0.8 }}
             className="text-5xl md:text-7xl lg:text-[80px] font-black leading-[1.1] mb-12 tracking-tight font-serif"
           >
-            <span className="text-[#a89076]">Hallo!</span> <span className="text-white">I am {about?.f_name || 'Towfique'}</span> <span className="text-white">{about?.l_name || 'Hasan'}</span><br />
-
-            {/* Need to map Titles */}
-            {titles?.map((title, id) => (
-              <>
-                <span key={id} className="text-white"> {title.title}</span>
-              </>
-            ))}
+            <span className="text-[#3390c5]">Hallo!</span> <span className="text-white">I am {about?.f_name || 'Towfique'}</span> <span className="text-white">{about?.l_name || 'Hasan'}</span><br />   
           </motion.h1>
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-3xl md:text-5xl lg:text-[60px] font-black leading-[1.1] mb-12 tracking-tight font-serif"
+          >
+            {/* <span className="text-[#a89076]">Hallo!</span> <span className="text-white">I am {about?.f_name || 'Towfique'}</span> <span className="text-white">{about?.l_name || 'Hasan'}</span><br /> */}
+
+            <span className="text-[#06572e]"> <span>{`{`}</span>{displayedText}</span>
+            <span className="text-[#c9431a] animate-pulse">|</span><span className="text-[#06572e]">{`}`}</span>
+          </motion.h2>
 
           {/* Sub Navigation/Links */}
           <motion.div
@@ -84,7 +126,7 @@ export default function Hero() {
               See bits and pieces of my code work and projects on
             </p>
             <div className="flex flex-wrap items-center gap-2 text-lg md:text-xl font-bold">
-              <a href={about?.github || "https://github.com"} target="_blank" rel="noreferrer" className="text-[#f92672] hover:opacity-80 transition-opacity">
+              <a href={about?.github || "https://github.com"} target="_blank" rel="noreferrer" className="text-primary hover:opacity-80 transition-opacity">
                 GitHub
               </a>
               <span className="text-white">-</span>
@@ -133,6 +175,10 @@ export default function Hero() {
           <span className="sr-only">GitHub</span>
         </a>
       </motion.div>
+
+      {/* Decorative Glows */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[120px] pointer-events-none z-0"></div>
+      <div className="absolute bottom-[10%] right-[10%] w-[30%] h-[30%] bg-primary/5 rounded-full blur-[100px] pointer-events-none z-0"></div>
 
     </section>
   );

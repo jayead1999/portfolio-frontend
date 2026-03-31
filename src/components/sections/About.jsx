@@ -8,7 +8,7 @@ const services = [
     icon: <FiLayout size={32} />,
     title: "Frontend Engineering",
     description: "Building responsive, accessible, and performant user interfaces using React, Next.js, and modern CSS frameworks like Tailwind.",
-    color: "text-[#a89076]"
+    color: "text-primary"
   },
   {
     icon: <FiDatabase size={32} />,
@@ -26,8 +26,8 @@ const services = [
 
 export default function About() {
   return (
-    <section id="about" className="py-24 relative z-10 bg-[#0a0a0a]">
-      <div className="container mx-auto px-6 md:px-12 border-t border-[#222222] pt-24">
+    <section id="about" className="py-24 relative z-10 bg-background">
+      <div className="container mx-auto px-6 md:px-12 border-t border-border pt-24">
         
         <div className="block lg:flex justify-between items-end mb-16">
           <div className="max-w-2xl text-left">
@@ -59,7 +59,7 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="p-8 rounded-none border-l-4 hover:border-[#a89076] border-[#222222] bg-[#111111] hover:bg-[#151515] transition-colors group"
+              className="p-8 rounded-none border-l-4 hover:border-primary border-border bg-card hover:bg-card/80 transition-colors group"
             >
               <div className={`mb-6 ${service.color}`}>
                 {service.icon}

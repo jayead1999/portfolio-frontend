@@ -64,8 +64,8 @@ export default function ProjectDetails({ params }) {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-[#0a0a0a] text-white selection:bg-[#a89076]/30 font-sans flex items-center justify-center">
-        <div className="text-[#a89076] animate-pulse">Loading project details...</div>
+      <main className="min-h-screen bg-background text-white selection:bg-primary/30 font-sans flex items-center justify-center">
+        <div className="text-primary animate-pulse">Loading project details...</div>
       </main>
     );
   }
@@ -76,7 +76,7 @@ export default function ProjectDetails({ params }) {
   const primaryImage = resolveImageUrl(project.image || (project.gallery_images && project.gallery_images.length > 0 && project.gallery_images[0]));
 
   return (
-    <main className="min-h-screen bg-[#0a0a0a] text-white selection:bg-[#a89076]/30 font-sans">
+    <main className="min-h-screen bg-background text-white selection:bg-primary/30 font-sans">
       <Navbar />
 
       {/* Hero Section Container for Project */}
@@ -90,13 +90,13 @@ export default function ProjectDetails({ params }) {
             priority
             className="object-cover object-center  opacity-60"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent z-10"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent z-10"></div>
         </div>
 
         <div className="container mx-auto px-6 md:px-12 relative z-20">
           <div className="max-w-4xl">
              <div className="flex flex-wrap items-center gap-3 mb-6">
-                <Link href="/projects" className="text-[#a89076] hover:text-white transition-colors flex items-center gap-2 text-sm font-bold tracking-wider uppercase">
+                <Link href="/projects" className="text-primary hover:text-white transition-colors flex items-center gap-2 text-sm font-bold tracking-wider uppercase">
                   <FiArrowLeft /> Back to Works
                 </Link>
                 <span className="text-[#555]">•</span>
@@ -115,12 +115,12 @@ export default function ProjectDetails({ params }) {
 
              <div className="flex flex-wrap gap-4 mt-8">
                 {(project.link || project.live_url) && (
-                  <a href={project.link || project.live_url} target="_blank" rel="noreferrer" className="px-6 py-3 bg-[#a89076] hover:bg-white text-black font-bold transition-colors flex items-center gap-2">
+                  <a href={project.link || project.live_url} target="_blank" rel="noreferrer" className="px-6 py-3 bg-primary hover:bg-white text-black font-bold transition-colors flex items-center gap-2">
                     <FiExternalLink /> View Live Project
                   </a>
                 )}
                 {project.github_url && (
-                  <a href={project.github_url} target="_blank" rel="noreferrer" className="px-6 py-3 bg-[#111111] hover:bg-[#222222] border border-[#333333] text-white font-bold transition-colors flex items-center gap-2">
+                  <a href={project.github_url} target="_blank" rel="noreferrer" className="px-6 py-3 bg-card hover:bg-card/80 border border-border text-white font-bold transition-colors flex items-center gap-2">
                     <FiGithub /> View Source
                   </a>
                 )}
@@ -130,7 +130,7 @@ export default function ProjectDetails({ params }) {
       </div>
 
       {/* Main Content Area */}
-      <div className="container mx-auto px-6 md:px-12 py-16 md:py-24 border-t border-[#222222]">
+      <div className="container mx-auto px-6 md:px-12 py-16 md:py-24 border-t border-border">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
             
             <div className="lg:col-span-8">
@@ -144,7 +144,7 @@ export default function ProjectDetails({ params }) {
               </div>
 
               {/* Technologies Section mapped inline if no standard format */}
-              <div className="mt-16 pt-12 border-t border-[#222222]">
+              <div className="mt-16 pt-12 border-t border-border">
                 {project.feature_dis && (
                   <div className="mb-12">
                     <h3 className="text-xl font-bold mb-6 font-serif">Key Features</h3>
@@ -157,7 +157,7 @@ export default function ProjectDetails({ params }) {
                 <h3 className="text-xl font-bold mb-6 font-serif">Technologies Used</h3>
                 <div className="flex flex-wrap gap-3">
                   {(project.technology || project.tags || project.technologies?.map(t => t.name) || project.tag || []).map((tech, i) => (
-                    <span key={i} className="px-4 py-2 bg-[#111111] border border-[#333333] text-[#a89076] font-bold text-xs uppercase tracking-wider">
+                    <span key={i} className="px-4 py-2 bg-card border border-border text-primary font-bold text-xs uppercase tracking-wider">
                       {tech}
                     </span>
                   ))}
@@ -167,8 +167,8 @@ export default function ProjectDetails({ params }) {
 
             {/* Right Column Meta Details Sidebar */}
             <div className="lg:col-span-4">
-              <div className="bg-[#111111] border border-[#222222] p-8 md:p-10 sticky top-32">
-                <h3 className="text-xl font-bold mb-8 border-b border-[#333333] pb-4 font-serif">Project Details</h3>
+              <div className="bg-card border border-border p-8 md:p-10 sticky top-32">
+                <h3 className="text-xl font-bold mb-8 border-b border-border pb-4 font-serif">Project Details</h3>
                 
                 <div className="space-y-6">
                   <div>
@@ -193,7 +193,7 @@ export default function ProjectDetails({ params }) {
                   <div>
                     <h4 className="text-xs font-bold text-[#555] uppercase tracking-wider mb-2">Status</h4>
                     <div className="flex items-center gap-2 mt-1">
-                      <span className="w-2 h-2 rounded-full bg-[#a89076]"></span>
+                      <span className="w-2 h-2 rounded-full bg-primary"></span>
                       <p className="text-white font-bold">{project.is_featured ? "Completed & Featured" : "Delivered"}</p>
                     </div>
                   </div>
@@ -204,15 +204,15 @@ export default function ProjectDetails({ params }) {
           </div>
 
         {(project.gallery_images || project.images) && (project.gallery_images?.length > 0 || project.images?.length > 0) && (
-          <div className="mt-20 pt-16 border-t border-[#222222]">
+          <div className="mt-20 pt-16 border-t border-border">
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-10">
               <h3 className="text-2xl md:text-3xl font-black font-serif">Project Gallery</h3>
               {((project.gallery_images || project.images).length > 3) && (
                 <div className="flex gap-3">
-                  <button onClick={scrollLeft} className="w-12 h-12 flex items-center justify-center border border-[#333333] bg-[#111111] rounded-full hover:bg-[#a89076] hover:text-[#0a0a0a] transition-all" aria-label="Previous image">
+                  <button onClick={scrollLeft} className="w-12 h-12 flex items-center justify-center border border-border bg-card rounded-full hover:bg-primary hover:text-black transition-all" aria-label="Previous image">
                     <FiArrowLeft size={20} />
                   </button>
-                  <button onClick={scrollRight} className="w-12 h-12 flex items-center justify-center border border-[#333333] bg-[#111111] rounded-full hover:bg-[#a89076] hover:text-[#0a0a0a] transition-all" aria-label="Next image">
+                  <button onClick={scrollRight} className="w-12 h-12 flex items-center justify-center border border-border bg-card rounded-full hover:bg-primary hover:text-black transition-all" aria-label="Next image">
                     <FiArrowRight size={20} />
                   </button>
                 </div>
@@ -222,7 +222,7 @@ export default function ProjectDetails({ params }) {
               {(project.gallery_images || project.images).map((img, i) => (
                  <div 
                    key={i} 
-                   className="flex-none w-[85%] sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] snap-start relative h-64 md:h-96 rounded-none overflow-hidden bg-black border border-[#222222]"
+                   className="flex-none w-[85%] sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] snap-start relative h-64 md:h-96 rounded-none overflow-hidden bg-black border border-border"
                  >
                    <Image 
                      src={resolveImageUrl(typeof img === 'string' ? img : img.image_path)} 

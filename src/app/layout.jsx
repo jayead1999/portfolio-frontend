@@ -8,7 +8,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
-      <body className="bg-[#0a0a0a] text-white antialiased selection:bg-[#a89076]/30 selection:text-white font-sans" suppressHydrationWarning>
+      <body className="bg-background text-white antialiased selection:bg-primary/30 selection:text-white font-sans" suppressHydrationWarning>
         {children}
       </body>
     </html>

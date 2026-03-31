@@ -36,15 +36,15 @@ export default function TechStack() {
   ];
 
   return (
-    <section id="skills" className="py-24 relative overflow-hidden bg-[#0a0a0a]">
-      <div className="container mx-auto px-6 md:px-12 text-center border-t border-[#222222] pt-24">
+    <section id="skills" className="py-24 relative overflow-hidden bg-background">
+      <div className="container mx-auto px-6 md:px-12 text-center border-t border-border pt-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="mb-16"
         >
-          <h2 className="text-sm font-bold tracking-[0.2em] text-[#a89076] uppercase mb-3">Technologies</h2>
+          <h2 className="text-sm font-bold tracking-[0.2em] text-primary uppercase mb-3">Technologies</h2>
           <h3 className="text-3xl md:text-5xl font-black text-white mb-6 tracking-tight font-serif">Tools of the Trade.</h3>
           <p className="max-w-xl mx-auto text-[#999999] text-lg">
             I leverage modern web technologies to build scalable, high-performance applications from frontend interfaces to backend architecture.
@@ -60,7 +60,7 @@ export default function TechStack() {
               viewport={{ once: true }}
               transition={{ delay: index * 0.05 }}
               whileHover={{ y: -5 }}
-              className="group relative bg-[#111111] border border-[#222222] p-6 flex flex-col items-center gap-4 transition-all hover:border-[#a89076] min-w-[140px]"
+              className="group relative bg-card border border-border p-6 flex flex-col items-center gap-4 transition-all hover:border-primary min-w-[140px]"
             >
               <div className="transition-transform group-hover:scale-110 drop-shadow-md grayscale group-hover:grayscale-0">
                 {skill.icon}

@@ -37,8 +37,8 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-32 relative bg-[#0a0a0a]">
-      <div className="container mx-auto px-6 md:px-12 border-t border-[#222222] pt-24">
+    <section id="contact" className="py-32 relative bg-background">
+      <div className="container mx-auto px-6 md:px-12 border-t border-border pt-24">
         
         <div className="flex flex-col lg:flex-row gap-16">
           <motion.div
@@ -47,13 +47,13 @@ export default function Contact() {
             viewport={{ once: true }}
             className="w-full lg:w-1/2"
           >
-            <h2 className="text-sm font-bold tracking-[0.2em] text-[#a89076] uppercase mb-3">Get in Touch</h2>
+            <h2 className="text-sm font-bold tracking-[0.2em] text-primary uppercase mb-3">Get in Touch</h2>
             <h3 className="text-4xl md:text-5xl font-black text-white font-serif mb-6">Let&apos;s work together.</h3>
             <p className="text-[#999999] text-lg mb-10 max-w-md leading-relaxed">
               Whether you have a project in mind, a question, or just want to say hi, my inbox is always open. I&apos;ll try my best to get back to you!
             </p>
 
-            <div className="bg-[#111111] border border-[#222222] p-8 mb-8">
+            <div className="bg-card border border-border p-8 mb-8">
               <h4 className="text-lg font-bold text-white mb-1">Email</h4>
               <p className="text-[#999999] mb-5">{about?.email || "hello@jayead.dev"}</p>
 
@@ -63,16 +63,16 @@ export default function Contact() {
               <h4 className="text-lg font-bold text-white mb-2">Social</h4>
               <div className="flex flex-wrap gap-4 mt-2">
                 {about?.linkedin && (
-                  <a href={about.linkedin} target="_blank" rel="noreferrer" className="text-[#a89076] hover:text-white transition-colors text-sm font-bold uppercase tracking-wider">LinkedIn</a>
+                  <a href={about.linkedin} target="_blank" rel="noreferrer" className="text-primary hover:text-white transition-colors text-sm font-bold uppercase tracking-wider">LinkedIn</a>
                 )}
                 {about?.github && (
-                  <a href={about.github} target="_blank" rel="noreferrer" className="text-[#a89076] hover:text-white transition-colors text-sm font-bold uppercase tracking-wider">GitHub</a>
+                  <a href={about.github} target="_blank" rel="noreferrer" className="text-primary hover:text-white transition-colors text-sm font-bold uppercase tracking-wider">GitHub</a>
                 )}
                 {about?.twitter && (
-                  <a href={about.twitter} target="_blank" rel="noreferrer" className="text-[#a89076] hover:text-white transition-colors text-sm font-bold uppercase tracking-wider">Twitter</a>
+                  <a href={about.twitter} target="_blank" rel="noreferrer" className="text-primary hover:text-white transition-colors text-sm font-bold uppercase tracking-wider">Twitter</a>
                 )}
                 {about?.facebook && (
-                  <a href={about.facebook} target="_blank" rel="noreferrer" className="text-[#a89076] hover:text-white transition-colors text-sm font-bold uppercase tracking-wider">Facebook</a>
+                  <a href={about.facebook} target="_blank" rel="noreferrer" className="text-primary hover:text-white transition-colors text-sm font-bold uppercase tracking-wider">Facebook</a>
                 )}
               </div>
             </div>
@@ -84,7 +84,7 @@ export default function Contact() {
             viewport={{ once: true }}
             className="w-full lg:w-1/2"
           >
-            <form onSubmit={handleSubmit} className="bg-[#111111] border border-[#222222] p-8 md:p-12">
+            <form onSubmit={handleSubmit} className="bg-card border border-border p-8 md:p-12">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
                   <label htmlFor="name" className="block text-xs font-bold text-[#999999] uppercase tracking-wider mb-2">Name</label>
@@ -105,7 +105,7 @@ export default function Contact() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full bg-[#0a0a0a] border border-[#333333] px-4 py-3 text-white focus:outline-none focus:border-[#a89076] transition-colors"
+                    className="w-full bg-background border border-border px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors"
                   />
                 </div>
               </div>
@@ -117,7 +117,7 @@ export default function Contact() {
                   id="subject"
                   value={formData.subject}
                   onChange={handleChange}
-                  className="w-full bg-[#0a0a0a] border border-[#333333] px-4 py-3 text-white focus:outline-none focus:border-[#a89076] transition-colors"
+                  className="w-full bg-background border border-border px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors"
                 />
               </div>
 
@@ -129,7 +129,7 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   rows="5"
-                  className="w-full bg-[#0a0a0a] border border-[#333333] px-4 py-3 text-white focus:outline-none focus:border-[#a89076] transition-colors resize-none"
+                  className="w-full bg-background border border-border px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors resize-none"
                 ></textarea>
               </div>
 
@@ -147,7 +147,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-[#a89076] hover:bg-white disabled:opacity-70 text-black font-bold py-4 px-8 transition-colors flex items-center justify-center gap-2"
+                className="w-full bg-primary hover:bg-white disabled:opacity-70 text-black font-bold py-4 px-8 transition-colors flex items-center justify-center gap-2"
               >
                 {loading ? "Sending..." : "Send Message"}
               </button>

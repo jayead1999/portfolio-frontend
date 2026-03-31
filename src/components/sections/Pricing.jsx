@@ -19,8 +19,8 @@ export default function Pricing() {
   // Removed mock fallback to display actual API data
 
   return (
-    <section id="pricing" className="py-24 relative z-10 bg-[#0a0a0a]">
-      <div className="container mx-auto px-6 md:px-12 border-t border-[#222222] pt-24">
+    <section id="pricing" className="py-24 relative z-10 bg-background">
+      <div className="container mx-auto px-6 md:px-12 border-t border-border pt-24">
         
         <div className="flex flex-col md:flex-row justify-between items-end mb-16">
           <motion.div
@@ -29,7 +29,7 @@ export default function Pricing() {
             viewport={{ once: true }}
             className="max-w-2xl"
           >
-            <h2 className="text-sm font-bold tracking-[0.2em] text-[#a89076] uppercase mb-3">Pricing</h2>
+            <h2 className="text-sm font-bold tracking-[0.2em] text-primary uppercase mb-3">Pricing</h2>
             <h3 className="text-3xl md:text-5xl font-black text-white tracking-tight font-serif">Flexible Plans.</h3>
           </motion.div>
         </div>
@@ -46,24 +46,24 @@ export default function Pricing() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className={`group overflow-hidden bg-[#111111] border ${pricing.is_popular ? 'border-[#a89076]' : 'border-[#222222]'} hover:border-[#a89076] transition-all flex flex-col h-full relative p-8`}
+                className={`group overflow-hidden bg-card border ${pricing.is_popular ? 'border-primary' : 'border-border'} hover:border-primary transition-all flex flex-col h-full relative p-8`}
               >
                 {pricing.is_popular ? (
-                  <div className="absolute top-0 right-0 bg-[#a89076] text-black text-xs font-bold px-3 py-1 uppercase tracking-wider">
+                  <div className="absolute top-0 right-0 bg-primary text-black text-xs font-bold px-3 py-1 uppercase tracking-wider">
                     Popular
                   </div>
                 ) : null}
                 <h4 className="text-2xl font-black text-white mb-2 font-serif transition-colors">
                   {pricing.plan_name}
                 </h4>
-                <div className="text-4xl font-black text-[#a89076] mb-6">
+                <div className="text-4xl font-black text-primary mb-6">
                   ${pricing.price}
                 </div>
                 
                 <ul className="text-[#999999] mb-8 grow flex flex-col gap-3">
                   {features.map((feature, i) => (
                     <li key={i} className="flex items-center gap-2 text-sm">
-                      <span className="text-[#a89076]">✓</span> {feature}
+                      <span className="text-primary">✓</span> {feature}
                     </li>
                   ))}
                 </ul>

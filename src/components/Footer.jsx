@@ -15,7 +15,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="bg-[#0a0a0a] py-12 border-t border-[#222222] relative z-10">
+    <footer className="bg-background py-12 border-t border-border relative z-10">
       <div className="container mx-auto px-6 md:px-12 flex flex-col items-center justify-between text-center md:flex-row md:text-left gap-8">
         <div>
           <span className="text-xl font-bold tracking-tighter text-white block mb-2">
