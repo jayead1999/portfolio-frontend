@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { FiTwitter, FiFacebook, FiGithub, FiLinkedin } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { fetchAbout, fetchHero } from "@/lib/api";
+import { fetchAbout, fetchHero, fetchTitles } from "@/lib/api";
 
 
 const IMAGE_BASE = process.env.NEXT_PUBLIC_IMAGE_API_URL;
@@ -13,15 +13,25 @@ const IMAGE_BASE = process.env.NEXT_PUBLIC_IMAGE_API_URL;
 export default function Hero() {
   const [about, setAbout] = useState(null);
   const [hero, setHero] = useState(null);
+  const [titles, setTitles] = useState(null);
+
 
   useEffect(() => {
+    // Featching about apis
     fetchAbout()
       .then(res => setAbout(res.data))
       .catch(err => console.error("Error fetching about info:", err));
 
+    // Featching hero apis
     fetchHero()
       .then(res => setHero(res.data))
       .catch(err => console.error("Error fetching hero info:", err));
+
+    // Featching titles apis
+    fetchTitles()
+      .then(res => setTitles(res.data))
+      .catch(err => console.error("Error fetching titles info:", err));
+
   }, []);
 
   return (
@@ -34,8 +44,7 @@ export default function Hero() {
           {/* Bottom gradient snippet just in case */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent z-10 h-full"></div>
           <Image
-            src={hero?.hero_image && `${IMAGE_BASE}/storage/${hero.hero_image}`}
-            // src={"/images/hero/hero.jpg"}
+            src={hero?.hero_image ? `${IMAGE_BASE}/storage/${hero.hero_image}` : "/images/hero/hero.jpg"}
             alt="Portrait"
             fill
             className="object-cover object-center opacity-60 md:opacity-100"
@@ -54,8 +63,14 @@ export default function Hero() {
             transition={{ duration: 0.8 }}
             className="text-5xl md:text-7xl lg:text-[80px] font-black leading-[1.1] mb-12 tracking-tight font-serif"
           >
-            <span className="text-[#a89076]">Hallo!</span> <span className="text-white">I am {hero?.title || about?.f_name || 'Building Digital Products'}</span><br />
-            <span className="text-white">{hero?.subtitle || 'Full Stack Developer'}</span><br />
+            <span className="text-[#a89076]">Hallo!</span> <span className="text-white">I am {about?.f_name || 'Towfique'}</span> <span className="text-white">{about?.l_name || 'Hasan'}</span><br />
+
+            {/* Need to map Titles */}
+            {titles?.map((title, id) => (
+              <>
+                <span key={id} className="text-white"> {title.title}</span>
+              </>
+            ))}
           </motion.h1>
 
           {/* Sub Navigation/Links */}

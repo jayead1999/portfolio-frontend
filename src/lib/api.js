@@ -54,6 +54,13 @@ export async function fetchHero() {
   return res;
 }
 
+// Title 
+export async function  fetchTitles(){
+  const res  = await apiClient.get('/titles');
+  return res;
+
+}
+
 export async function fetchAbout() {
   const res = await apiClient.get('/about');
   return res;
