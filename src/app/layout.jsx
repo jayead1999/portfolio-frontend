@@ -1,4 +1,5 @@
 import "./globals.css";
+import WebLayout from "@/components/layout/webLayout";
 
 export const metadata = {
   title: "Jayead | Full Stack Web Developer",
@@ -9,7 +10,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body className="bg-background text-white antialiased selection:bg-primary/30 selection:text-white font-sans" suppressHydrationWarning>
-        {children}
+          <WebLayout>
+            {children}
+          </WebLayout>
       </body>
     </html>
   );

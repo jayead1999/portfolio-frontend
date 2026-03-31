@@ -17,28 +17,28 @@ export default function FloatingContact() {
   const socialLinks = [
     {
       icon: <FaGithub />,
-      href: socials?.github || "https://github.com/jayead",
+      href: socials?.github || "https://github.com/jayead199",
       label: "GitHub",
       color: "hover:bg-white hover:text-black",
       hoverShadow: "hover:shadow-[0_0_15px_rgba(255,255,255,0.4)]"
     },
     {
       icon: <FaLinkedin />,
-      href: socials?.linkedin || "https://linkedin.com/in/jayead",
+      href: socials?.linkedin || "https://linkedin.com/in/md-towfique-hasan-jayead",
       label: "LinkedIn",
       color: "hover:bg-[#0077b5] hover:text-white",
       hoverShadow: "hover:shadow-[0_0_15px_rgba(0,119,181,0.4)]"
     },
     {
       icon: <FaWhatsapp />,
-      href: socials?.whatsapp ? `https://wa.me/${socials.whatsapp.replace(/\D/g, '')}` : "https://wa.me/",
+      href: socials?.whatsapp ? `https://wa.me/${socials.whatsapp.replace(/\D/g, '')}` : "https://wa.me/+8801567909543",
       label: "WhatsApp",
       color: "hover:bg-[#25d366] hover:text-white",
       hoverShadow: "hover:shadow-[0_0_15px_rgba(37,211,102,0.4)]"
     },
     {
       icon: <FaEnvelope />,
-      href: socials?.email ? `mailto:${socials.email}` : "mailto:hello@jayead.dev",
+      href: socials?.email ? `mailto:${socials.email}` : "mailto:jayead007@gmail.com",
       label: "Email",
       color: "hover:bg-primary hover:text-black",
       hoverShadow: "hover:shadow-[0_0_15px_rgba(139,92,246,0.4)]"

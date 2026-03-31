@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
+import { FiGithub, FiLinkedin, FiMail  } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import { fetchAbout } from "@/lib/api";
 
@@ -34,15 +34,18 @@ export default function Footer() {
             <Link href="/projects" className="text-slate-400 hover:text-white text-sm transition-colors">Projects</Link>
           </div>
           <div className="flex gap-4">
-            <a href={about?.github || "https://github.com"} target="_blank" rel="noreferrer" className="p-2 bg-white/5 text-slate-400 rounded-lg hover:text-white hover:bg-white/10 border border-white/5 transition-colors">
+            <a href={about?.github || "https://github.com/jayead1999"} target="_blank" rel="noreferrer" className="p-2 bg-white/5 text-slate-400 rounded-lg hover:text-white hover:bg-white/10 border border-white/5 transition-colors">
               <FiGithub size={18} />
             </a>
-            <a href={about?.linkedin || "https://linkedin.com"} target="_blank" rel="noreferrer" className="p-2 bg-white/5 text-slate-400 rounded-lg hover:text-white hover:bg-white/10 border border-white/5 transition-colors">
+            <a href={about?.linkedin || "https://linkedin.com/in/md-towfique-hasan-jayead"} target="_blank" rel="noreferrer" className="p-2 bg-white/5 text-slate-400 rounded-lg hover:text-white hover:bg-white/10 border border-white/5 transition-colors">
               <FiLinkedin size={18} />
             </a>
-            <a href={`mailto:${about?.email || "hello@jayead.dev"}`} className="p-2 bg-white/5 text-slate-400 rounded-lg hover:text-white hover:bg-white/10 border border-white/5 transition-colors">
+            <a href={`mailto:${about?.email || "jayead007@gmail.com"}`} className="p-2 bg-white/5 text-slate-400 rounded-lg hover:text-white hover:bg-white/10 border border-white/5 transition-colors">
               <FiMail size={18} />
             </a>
+            {/* <a href={about?.whatsapp ? `https://wa.me/${socials.whatsapp.replace(/\D/g, '')}` : "https://wa.me/+8801567909543"} target="_blank" rel="noreferrer" className="p-2 bg-white/5 text-slate-400 rounded-lg hover:text-white hover:bg-white/10 border border-white/5 transition-colors">
+              <FaWhatsapp size={18} />
+            </a> */}
           </div>
         </div>
 
