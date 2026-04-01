@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { FiTwitter, FiFacebook, FiGithub, FiLinkedin } from "react-icons/fi";
+import { FaWhatsapp } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { fetchAbout, fetchHero, fetchTitles } from "@/lib/api";
@@ -32,7 +33,7 @@ export default function Hero() {
 
     // Featching titles apis
     fetchTitles()
-      .then(res => setTitles(res.data))
+      .then(res => setTitles(res.data || []))
       .catch(err => console.error("Error fetching titles info:", err));
 
   }, []);
@@ -160,20 +161,28 @@ export default function Hero() {
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 1 }}
-        className="absolute bottom-12 left-6 md:left-12 z-30 flex flex-col gap-6 text-white"
+        className="absolute  left-6 md:left-12 z-30 flex flex-col gap-6 text-white"
       >
-        <a href={about?.twitter || "https://twitter.com"} target="_blank" rel="noreferrer" className="hover:text-[#00a1f1] transition-colors">
+        {/* <a href={about?.twitter || "https://twitter.com"} target="_blank" rel="noreferrer" className="hover:text-[#00a1f1] transition-colors">
           <FiTwitter size={20} />
           <span className="sr-only">Twitter</span>
-        </a>
-        <a href={about?.facebook || "https://facebook.com"} target="_blank" rel="noreferrer" className="hover:text-[#1877F2] transition-colors">
+        </a> */}
+        <a href={about?.facebook || "https://facebook.com/towfique.jayead"} target="_blank" rel="noreferrer" className="hover:text-[#1877F2] transition-colors">
           <FiFacebook size={20} />
           <span className="sr-only">Facebook</span>
         </a>
-        <a href={about?.github || "https://github.com"} target="_blank" rel="noreferrer" className="hover:text-[#f92672] transition-colors">
+        <a href={about?.github || "https://github.com/jayead1999"} target="_blank" rel="noreferrer" className="hover:text-[#f92672] transition-colors">
           <FiGithub size={20} />
           <span className="sr-only">GitHub</span>
         </a>
+        {/* Linkind */}
+        <a href={about?.linkedin || "https://linkedin.com/in/md-towfique-hasan-jayead"} target="_blank" rel="noreferrer" className="hover:text-[#00a1f1] transition-colors">
+          <FiLinkedin size={20} />
+          <span className="sr-only">Linkedin</span>
+        </a>
+        {/* <a href={about?.whatsapp ? `https://wa.me/${about.whatsapp.replace(/\D/g, '')}` : "https://wa.me/+8801567909543"} target="_blank" rel="noreferrer" className="p-2 bg-white/5 text-slate-400 rounded-lg hover:text-white hover:bg-white/10 border border-white/5 transition-colors">
+          <FaWhatsapp size={18} />
+        </a> */}
       </motion.div>
 
       {/* Decorative Glows */}

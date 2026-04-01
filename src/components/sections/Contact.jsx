@@ -37,7 +37,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-32 relative bg-background">
+    <section id="contact" className="py-16 relative bg-background">
       <div className="container mx-auto px-6 md:px-12 border-t border-border pt-24">
         
         <div className="flex flex-col lg:flex-row gap-16">

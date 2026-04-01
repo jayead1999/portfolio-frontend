@@ -17,8 +17,6 @@ import {
   FiCheckCircle,
   FiX
 } from "react-icons/fi";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { useState, useEffect, use, useRef } from "react";
 import { fetchProjectBySlug } from "@/lib/api";
 import Image from "next/image";
@@ -79,27 +77,23 @@ export default function ProjectDetails({ params }) {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-background text-white selection:bg-primary/30 font-sans flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="relative">
           <div className="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
           <div className="mt-4 text-primary font-bold tracking-widest text-xs uppercase animate-pulse text-center">Loading</div>
         </div>
-      </main>
+      </div>
     );
   }
 
   if (!project) {
     return (
-      <main className="min-h-screen bg-background text-white selection:bg-primary/30 font-sans">
-        <Navbar />
-        <div className="container mx-auto px-6 py-24 text-center">
-          <h1 className="text-4xl font-bold mb-6">Project Not Found</h1>
-          <Link href="/projects" className="text-primary hover:underline flex items-center justify-center gap-2">
-            <FiArrowLeft /> Back to Projects
-          </Link>
-        </div>
-        <Footer />
-      </main>
+      <div className="container mx-auto px-6 py-24 text-center">
+        <h1 className="text-4xl font-bold mb-6 text-white">Project Not Found</h1>
+        <Link href="/projects" className="text-primary hover:underline flex items-center justify-center gap-2">
+          <FiArrowLeft /> Back to Projects
+        </Link>
+      </div>
     );
   }
 
@@ -107,8 +101,7 @@ export default function ProjectDetails({ params }) {
   const primaryImage = resolveImageUrl(project.image || (project.gallery_images && project.gallery_images.length > 0 && project.gallery_images[0]));
 
   return (
-    <main className="min-h-screen bg-background text-white selection:bg-primary/30 font-sans">
-      <Navbar />
+    <>
 
       {/* Hero Header Section - Updated to Banner Style from Dummy */}
       <div className="relative h-[65vh] md:h-[75vh] w-full overflow-hidden">
@@ -489,7 +482,6 @@ export default function ProjectDetails({ params }) {
         </div>
       </section>
 
-      <Footer />
-    </main>
+    </>
   );
 }
