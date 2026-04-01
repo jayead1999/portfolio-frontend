@@ -21,12 +21,11 @@ const nextConfig = {
         hostname: 'images.unsplash.com',
         pathname: '/**',
       },
-      // {
-      //   protocol: "http",
-      //   hostname: "localhost",
-      //   port: "8000",
-      //   pathname: "/storage/**",
-      // },
+      {
+        protocol: 'https',
+        hostname: 'jayead.syntorit.com',
+        pathname: '/**',
+      },
     ],
   },
 };

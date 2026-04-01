@@ -33,7 +33,7 @@ export default function Hero() {
 
     // Featching titles apis
     fetchTitles()
-      .then(res => setTitles(res.data))
+      .then(res => setTitles(res.data || []))
       .catch(err => console.error("Error fetching titles info:", err));
 
   }, []);
