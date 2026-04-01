@@ -11,7 +11,7 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "https://jayead.dev/images/og-image.jpg",
+        url: "https://jayead.dev/images/hero/hero.jpg",
         width: 1200,
         height: 630,
       },
@@ -21,7 +21,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Projects | Towfique Hasan Jayead",
     description: "Explore projects built by Towfique Hasan Jayead using React, Next.js, and Laravel.",
-    images: ["https://jayead.dev/images/og-image.jpg"],
+    images: ["https://jayead.dev/images/hero/hero.jpg"],
   },
 };
 

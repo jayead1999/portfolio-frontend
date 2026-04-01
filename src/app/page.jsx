@@ -17,7 +17,7 @@ export const metadata = {
     siteName: "Towfique Hasan Jayead",
     images: [
       {
-        url: "https://jayead.dev/images/og-image.jpg",
+        url: "https://jayead.dev/images/hero/hero.jpg",
         width: 1200,
         height: 630,
       },
@@ -29,7 +29,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Md Towfique Hasan Jayead | Full Stack Web Developer",
     description: "Portfolio of Md Towfique Hasan Jayead, a passionate Full Stack Web Developer specializing in Next.js, React, and Laravel.",
-    images: ["https://jayead.dev/images/og-image.jpg"],
+    images: ["https://jayead.dev/images/hero/hero.jpg"],
   },
 };
 

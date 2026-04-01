@@ -10,7 +10,7 @@ export default function SEO({
   title = "Towfique Hasan Jayead | Full Stack Developer",
   description = "Portfolio of Towfique Hasan Jayead (Md Towfique Hasan Jayead, Jayead), a Full Stack Developer specializing in React, Next.js, and Laravel.",
   url = "https://jayead.dev",
-  image = "https://jayead.dev/images/og-image.jpg",
+  image = "https://jayead.dev/images/hero/hero.jpg",
 }) {
   return (
     <>
@@ -65,7 +65,10 @@ export default function SEO({
             jobTitle: "Full Stack Developer",
             sameAs: [
               "https://github.com/jayead1999",
-              "https://linkedin.com/in/md-towfique-hasan-jayead"
+              "https://linkedin.com/in/md-towfique-hasan-jayead",
+              // facebook instagram
+              "https://facebook.com/towfique.jayead/",
+              "https://instagram.com/_jayead_/"
             ]
           }),
         }}
