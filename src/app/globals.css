@@ -2,11 +2,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #07071f;
+  --foreground: #ffffff;
   --primary: #8b5cf6;
-  --border: #e2e8f0;
-  --grid: rgba(0, 0, 0, 0.1);
+  --border: #36365f;
+  --grid: rgba(79, 70, 229, 0.1);
+  --card: #030316;
 }
 
 @theme inline {
@@ -32,7 +33,7 @@
 
 body {
   background: var(--background);
-  background-image: 
+  background-image:
     linear-gradient(var(--grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid) 1px, transparent 1px);
   background-size: 50px 50px;
@@ -40,4 +41,3 @@ body {
   font-family: 'Iosevka Charon Mono', monospace;
   min-height: 100vh;
 }
-
