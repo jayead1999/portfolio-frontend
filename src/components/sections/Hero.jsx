@@ -8,8 +8,7 @@ import Image from "next/image";
 import { fetchAbout, fetchHero, fetchTitles } from "@/lib/api";
 
 
-const IMAGE_BASE = process.env.NEXT_PUBLIC_IMAGE_API_URL;
-// const IMAGE_BASE = process.env.NEXT_PUBLIC_IMAGE_API_URL ?? "";
+import { resolveImageUrl } from "@/lib/utils";
 
 export default function Hero() {
   const [about, setAbout] = useState(null);
@@ -83,7 +82,7 @@ export default function Hero() {
           {/* Bottom gradient snippet just in case */}
           <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)] via-transparent to-transparent z-10 h-full"></div>
           <Image
-            src={hero?.hero_image ? `${IMAGE_BASE}/storage/${hero.hero_image}` : "/images/hero/hero.jpg"}
+            src={hero?.hero_image ? resolveImageUrl(hero.hero_image) : "/images/hero/hero.jpg"}
             alt="Portrait"
             fill
             className="object-cover object-center opacity-60 md:opacity-100"

@@ -7,7 +7,7 @@ import Image from "next/image";
 import { FiGithub, FiExternalLink } from "react-icons/fi";
 import { fetchAllProjects } from "@/lib/api";
 
-const IMAGE_BASE = process.env.NEXT_PUBLIC_IMAGE_API_URL;
+import { resolveImageUrl } from "@/lib/utils";
 
 export default function Projects() {
   const [projects, setProjects] = useState([]);
@@ -69,7 +69,7 @@ export default function Projects() {
 
               <div className="relative h-72 overflow-hidden bg-black">
                 <Image
-                  src={project?.image && `${IMAGE_BASE}/storage/${project.image}`}
+                  src={resolveImageUrl(project?.image)}
                   alt={project.title}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
@@ -88,7 +88,7 @@ export default function Projects() {
                 </div>
               </div>
 
-              <div className="p-8 flex flex-col flex-grow z-0">
+              <div className="p-8 flex flex-col grow z-0">
                 <h4 className="text-2xl font-black text-white mb-4 group-hover:text-primary font-serif transition-colors">
                   {project.title}
                 </h4>

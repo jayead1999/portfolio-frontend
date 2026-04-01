@@ -19,23 +19,9 @@ import {
 } from "react-icons/fi";
 import { useState, useEffect, use, useRef } from "react";
 import { fetchProjectBySlug } from "@/lib/api";
+import { resolveImageUrl } from "@/lib/utils";
+
 import Image from "next/image";
-
-const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:8000';
-
-function resolveImageUrl(path) {
-  if (!path) return "";
-  if (path.startsWith('http://') || path.startsWith('https://')) return path;
-  
-  // Clean leading slash and handle storage/ prefix if it exists
-  let cleanPath = path.startsWith('/') ? path.substring(1) : path;
-  if (cleanPath.startsWith('storage/')) {
-    cleanPath = cleanPath.substring(8);
-  }
-  
-  const baseUrl = BACKEND_URL.endsWith('/') ? BACKEND_URL.slice(0, -1) : BACKEND_URL;
-  return `${baseUrl}/storage/${cleanPath}`;
-}
 
 export default function ProjectDetails({ params }) {
   const { slug } = use(params);

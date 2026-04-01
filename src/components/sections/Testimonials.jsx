@@ -6,7 +6,7 @@ import Image from "next/image";
 import { FiExternalLink, FiUser } from "react-icons/fi";
 import { fetchTestimonials } from "@/lib/api";
 
-const IMAGE_BASE = process.env.NEXT_PUBLIC_IMAGE_API_URL;
+import { resolveImageUrl } from "@/lib/utils";
 
 export default function Testimonials() {
   const [testimonials, setTestimonials] = useState([]);
@@ -63,7 +63,7 @@ export default function Testimonials() {
                   <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-primary/20 bg-white/5 flex items-center justify-center">
                     {item.profile_picture ? (
                       <Image
-                        src={`${IMAGE_BASE}/storage/${item.profile_picture}`}
+                        src={resolveImageUrl(item.profile_picture)}
                         alt={item.name}
                         fill
                         className="object-cover"

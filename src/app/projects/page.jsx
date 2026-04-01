@@ -4,22 +4,10 @@ import Link from "next/link";
 import { FiArrowRight, FiExternalLink } from "react-icons/fi";
 import { useState, useEffect } from "react";
 import { fetchAllProjects } from "@/lib/api";
+import { resolveImageUrl } from "@/lib/utils";
 import Image from "next/image";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '');
-function resolveImageUrl(path) {
-  if (!path) return null;
-  if (path.startsWith('http://') || path.startsWith('https://')) return path;
 
-  // Clean leading slash and handle storage/ prefix if it exists
-  let cleanPath = path.startsWith('/') ? path.substring(1) : path;
-  if (cleanPath.startsWith('storage/')) {
-    cleanPath = cleanPath.substring(8);
-  }
-  
-  const baseUrl = BACKEND_URL.endsWith('/') ? BACKEND_URL.slice(0, -1) : BACKEND_URL;
-  return `${baseUrl}/storage/${cleanPath}`;
-}
 
 function getProjectImage(project) {
   const raw = project.image || (project.gallery_images && project.gallery_images[0]);
